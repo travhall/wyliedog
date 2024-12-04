@@ -1,0 +1,3 @@
+              - name: GitHub App access token generator
+                uses: mercari/github-app-token-generator@v1
+            
