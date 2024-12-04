@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@/components/Button";
 
 export default function Home() {
   return (
@@ -47,6 +48,16 @@ export default function Home() {
           >
             Read our docs
           </a>
+        </div>
+
+        {/* New section to showcase the Button component */}
+        <div className="mt-8 flex flex-col items-center gap-4">
+          <h2 className="text-xl font-bold mb-2">Design System Buttons</h2>
+          <div className="flex gap-4 flex-wrap justify-center">
+            <Button primary size="large" label="Primary Large" />
+            <Button size="medium" label="Secondary Medium" />
+            <Button primary size="small" label="Primary Small" />
+          </div>
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
