@@ -1,10 +1,10 @@
 # 🐕 Project Wylie Dog
 
-A modern, accessible React component library and design system built with TypeScript, Radix UI, and Tailwind CSS.
+A modern, accessible React component library and design system built with TypeScript, shadcn/ui, Radix UI, and Tailwind CSS.
 
 ## Features
 
-- 🎨 Comprehensive UI component library built on Radix UI primitives
+- 🎨 Comprehensive UI component library built on shadcn/ui and Radix UI primitives
 - 📱 Responsive design using Tailwind CSS
 - ⚡️ Powered by Vite for fast development and building
 - 🔍 Type-safe development with TypeScript in strict mode
@@ -13,6 +13,7 @@ A modern, accessible React component library and design system built with TypeSc
 - 🌙 Dark mode support with next-themes
 - 📊 Data visualization with Recharts
 - 🎭 Animation support via tailwindcss-animate
+- 🧩 Customizable and maintainable components via shadcn/ui
 
 ## Quick Start
 
@@ -48,20 +49,23 @@ pnpm storybook
 - `pnpm lint` - Run ESLint
 - `pnpm storybook` - Start Storybook development server
 - `pnpm build-storybook` - Build Storybook for production
+- `pnpm shadcn-ui` - Add new shadcn/ui components
 
 ## Project Structure
 
 ```
 wyliedog/
 ├── src/
-│   ├── components/    # Reusable UI components
-│   ├── hooks/        # Custom React hooks
-│   ├── layouts/      # Layout components
-│   ├── lib/          # Utility functions
-│   ├── pages/        # Page components
-│   └── stories/      # Storybook documentation
-├── .storybook/       # Storybook configuration
-└── public/           # Static assets
+│   ├── components/
+│   │   └── ui/          # shadcn/ui components
+│   ├── hooks/           # Custom React hooks
+│   ├── layouts/         # Layout components
+│   ├── lib/             # Utility functions
+│   ├── pages/           # Page components
+│   └── stories/         # Storybook documentation
+├── components.json      # shadcn/ui configuration
+├── .storybook/         # Storybook configuration
+└── public/             # Static assets
 ```
 
 ## Core Technologies
@@ -70,6 +74,7 @@ wyliedog/
 - **TypeScript** - Type safety and developer experience
 - **Vite** - Build tool and development server
 - **Tailwind CSS** - Utility-first styling
+- **shadcn/ui** - Reusable component system
 - **Radix UI** - Accessible component primitives
 - **Storybook** - Component development and documentation
 - **React Hook Form** - Form management
@@ -78,25 +83,43 @@ wyliedog/
 
 ## Component Usage
 
-Components are built using Radix UI primitives and styled with Tailwind CSS. Here's a basic example:
+Components are built using shadcn/ui, which is based on Radix UI primitives and styled with Tailwind CSS. Here's a basic example:
 
 ```tsx
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent
+} from '@/components/ui/card'
 
 export function Example() {
   return (
     <Card>
-      <Card.Header>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Description>Card Description</Card.Description>
-      </Card.Header>
-      <Card.Content>
+      <CardHeader>
+        <CardTitle>Card Title</CardTitle>
+        <CardDescription>Card Description</CardDescription>
+      </CardHeader>
+      <CardContent>
         <Button>Click Me</Button>
-      </Card.Content>
+      </CardContent>
     </Card>
   )
 }
+```
+
+## Adding New Components
+
+The project uses shadcn/ui for component management. To add a new component:
+
+```bash
+# Add a new shadcn/ui component
+pnpm shadcn-ui add [component-name]
+
+# Example: Add button component
+pnpm shadcn-ui add button
 ```
 
 ## Design Principles
@@ -106,6 +129,7 @@ export function Example() {
 3. **Responsive Design**: Mobile-first approach using Tailwind CSS.
 4. **Component-Driven**: Modular components designed for reusability and composition.
 5. **Performance**: Optimized bundle size and runtime performance.
+6. **Maintainability**: Leveraging shadcn/ui for sustainable component development.
 
 ## Contributing
 
@@ -128,6 +152,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
+- [shadcn/ui](https://ui.shadcn.com) for the component system
 - [Radix UI](https://www.radix-ui.com/) for accessible component primitives
 - [Tailwind CSS](https://tailwindcss.com/) for utility-first styling
 - [Vite](https://vitejs.dev/) for build tooling
