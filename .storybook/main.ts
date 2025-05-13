@@ -6,15 +6,20 @@ const config: StorybookConfig = {
     "../src/stories/getting-started/*.mdx",
     "../src/stories/**/*.stories.tsx"
   ],
+
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@storybook/addon-mdx-gfm",
+    "@chromatic-com/storybook"
   ],
+
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
+
   viteFinal: async (config) => {
     return {
       ...config,
@@ -25,9 +30,14 @@ const config: StorybookConfig = {
       },
     };
   },
+
   docs: {
-    autodocs: true,
+    autodocs: true
   },
+
+  typescript: {
+    reactDocgen: "react-docgen-typescript"
+  }
 };
 
 export default config;
