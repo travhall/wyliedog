@@ -1,0 +1,78 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Getting Started/Installation & Setup" />
+
+# Installation & Setup
+
+## Prerequisites
+
+- Node.js 18.0.0 or higher
+- pnpm (recommended) or npm/yarn
+
+## Installation
+
+```bash
+# Using pnpm (recommended)
+pnpm add @wyliedog/core
+
+# Using npm
+npm install @wyliedog/core
+
+# Using yarn
+yarn add @wyliedog/core
+```
+
+## Setup
+
+### 1. Import CSS
+
+Add the CSS to your main entry file:
+
+```tsx
+// In your main.tsx or index.tsx
+import '@wyliedog/core/dist/styles.css';
+```
+
+### 2. Configure Tailwind CSS
+
+Update your `tailwind.config.js`:
+
+```js
+import { withWylieDog } from '@wyliedog/core/tailwind';
+
+export default withWylieDog({
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+  ],
+});
+```
+
+### 3. Theme Provider (Optional)
+
+Wrap your app with the theme provider:
+
+```tsx
+import { ThemeProvider } from '@wyliedog/core';
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      {/* Your app */}
+    </ThemeProvider>
+  );
+}
+```
+
+## First Component
+
+```tsx
+import { Button } from '@wyliedog/core';
+
+function MyComponent() {
+  return (
+    <Button variant="primary">
+      Hello Wylie Dog!
+    </Button>
+  );
+}
+```

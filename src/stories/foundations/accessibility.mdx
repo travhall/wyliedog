@@ -1,0 +1,46 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Foundations/Accessibility" />
+
+# Accessibility Guidelines
+
+## WCAG 2.1 AA Compliance
+
+All components in the Wylie Dog Design System meet WCAG 2.1 AA standards. This ensures our interfaces are usable by people with diverse abilities and needs.
+
+## Core Principles
+
+### Perceivable
+- **Color Contrast**: Minimum 4.5:1 ratio for normal text, 3:1 for large text
+- **Text Alternatives**: All non-text content has appropriate alt text
+- **Adaptable Content**: Information available in multiple formats
+
+### Operable  
+- **Keyboard Navigation**: All functionality available via keyboard
+- **Focus Management**: Clear focus indicators and logical tab order
+- **No Seizures**: No content that flashes more than 3 times per second
+
+### Understandable
+- **Clear Language**: Simple, consistent terminology
+- **Predictable**: Consistent navigation and component behavior
+- **Input Assistance**: Clear labels and error messages
+
+### Robust
+- **Valid HTML**: Standards-compliant markup
+- **ARIA Support**: Proper roles, states, and properties
+- **Assistive Technology**: Compatible with screen readers
+
+## Testing Tools
+
+- **axe DevTools**: Browser extension for automated testing
+- **WAVE**: Web accessibility evaluation tool
+- **Colour Contrast Analyzer**: Desktop app for contrast checking
+- **Screen Readers**: NVDA, JAWS, VoiceOver for manual testing
+
+## Implementation
+
+Each component includes:
+- Required ARIA attributes
+- Keyboard interaction patterns
+- Screen reader announcements
+- Focus management guidance

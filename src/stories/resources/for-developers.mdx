@@ -1,0 +1,496 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Resources/For Developers" />
+
+# Resources for Developers
+
+Welcome to the Wylie Dog Design System developer resources! This guide will help you implement and use our design system components effectively in your applications.
+
+## Quick Start
+
+### Installation
+
+```bash
+# Using pnpm (recommended)
+pnpm add @wyliedog/core
+
+# Using npm
+npm install @wyliedog/core
+
+# Using yarn
+yarn add @wyliedog/core
+```
+
+### Basic Setup
+
+1. **Import the CSS:**
+```tsx
+// In your main entry file (main.tsx, index.tsx, or _app.tsx)
+import '@wyliedog/core/dist/styles.css';
+```
+
+2. **Use components:**
+```tsx
+import { Button } from '@wyliedog/core';
+
+function MyComponent() {
+  return (
+    <Button variant="primary">
+      Click Me
+    </Button>
+  );
+}
+```
+
+### TypeScript Support
+
+Wylie Dog is built with TypeScript and includes full type definitions. All components are fully typed with comprehensive prop interfaces.
+
+```tsx
+import { Button, ButtonProps } from '@wyliedog/core';
+
+// Props are fully typed
+const MyButton: React.FC<ButtonProps> = (props) => {
+  return <Button {...props} />;
+};
+```
+
+## Configuration
+
+### Tailwind CSS Integration
+
+If you're using Tailwind CSS in your project, integrate Wylie Dog's configuration:
+
+```js
+// tailwind.config.js
+import { withWylieDog } from '@wyliedog/core/tailwind';
+
+export default withWylieDog({
+  content: [
+    './src/**/*.{js,jsx,ts,tsx}',
+    // Add other content paths
+  ],
+  // Your additional Tailwind configuration
+});
+```
+
+### Vite Configuration
+
+For Vite projects, you may need to optimize dependencies:
+
+```js
+// vite.config.js
+export default defineConfig({
+  optimizeDeps: {
+    include: ['@wyliedog/core'],
+  },
+});
+```
+
+### Next.js Configuration
+
+For Next.js projects, add to your configuration:
+
+```js
+// next.config.js
+module.exports = {
+  transpilePackages: ['@wyliedog/core'],
+};
+```
+
+## Component Usage
+
+### Basic Components
+
+```tsx
+import {
+  Button,
+  Input,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent
+} from '@wyliedog/core';
+
+function LoginForm() {
+  return (
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <CardTitle>Sign In</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Input type="email" placeholder="Email" />
+        <Input type="password" placeholder="Password" />
+        <Button className="w-full">Sign In</Button>
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+### Form Components
+
+```tsx
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+  Input,
+  Button
+} from '@wyliedog/core';
+import { useForm } from 'react-hook-form';
+
+function ContactForm() {
+  const form = useForm();
+  
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Name</FormLabel>
+              <FormControl>
+                <Input placeholder="Your name" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  );
+}
+```
+
+### Composition Patterns
+
+```tsx
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Button
+} from '@wyliedog/core';
+
+function ConfirmDialog({ children, onConfirm }) {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        {children}
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you sure?</DialogTitle>
+        </DialogHeader>
+        <div className="flex justify-end gap-2 mt-4">
+          <Button variant="outline">Cancel</Button>
+          <Button onClick={onConfirm}>Confirm</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+```
+
+## Theming and Customization
+
+### Theme Provider
+
+```tsx
+import { ThemeProvider } from '@wyliedog/core';
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      {/* Your application */}
+    </ThemeProvider>
+  );
+}
+```
+
+### Custom Theme
+
+```tsx
+import { ThemeProvider, createTheme } from '@wyliedog/core';
+
+const customTheme = createTheme({
+  colors: {
+    primary: {
+      500: '#0055FF', // Your brand color
+    },
+  },
+  // Other customizations
+});
+
+function App() {
+  return (
+    <ThemeProvider theme={customTheme}>
+      {/* Your application */}
+    </ThemeProvider>
+  );
+}
+```
+
+### CSS Variables
+
+You can also customize using CSS variables:
+
+```css
+:root {
+  --color-primary-500: #0055FF;
+  --color-primary-600: #0044CC;
+  /* Override other variables */
+}
+```
+
+### Component Styling
+
+Components accept a `className` prop for custom styling:
+
+```tsx
+<Button className="bg-green-500 hover:bg-green-600">
+  Custom Styled Button
+</Button>
+```
+
+## Best Practices
+
+### Component Usage
+
+**Do:**
+- Use semantic HTML elements through component props
+- Leverage component composition over configuration
+- Follow the established design token system
+- Use TypeScript for better development experience
+
+**Don't:**
+- Override internal component styles with `!important`
+- Use hardcoded values instead of design tokens
+- Modify component internals directly
+- Ignore accessibility props and guidelines
+
+### Performance
+
+**Tree Shaking:**
+```tsx
+// Good - imports only what you need
+import { Button } from '@wyliedog/core';
+
+// Avoid - imports entire library
+import * as WylieDog from '@wyliedog/core';
+```
+
+**Dynamic Imports:**
+```tsx
+// For large components, consider dynamic imports
+const DataTable = lazy(() => 
+  import('@wyliedog/core').then(module => ({ 
+    default: module.DataTable 
+  }))
+);
+```
+
+### Accessibility
+
+**ARIA Attributes:**
+```tsx
+// Components support ARIA attributes
+<Button aria-label="Close dialog" aria-describedby="close-description">
+  ×
+</Button>
+```
+
+**Keyboard Navigation:**
+```tsx
+// Handle keyboard events
+<Button onKeyDown={(e) => {
+  if (e.key === 'Enter') {
+    handleAction();
+  }
+}}>
+  Action
+</Button>
+```
+
+## Testing
+
+### Unit Testing
+
+```tsx
+import { render, screen } from '@testing-library/react';
+import { Button } from '@wyliedog/core';
+
+test('renders button with text', () => {
+  render(<Button>Click me</Button>);
+  expect(screen.getByRole('button', { name: /click me/i })).toBeInTheDocument();
+});
+```
+
+### Integration Testing
+
+```tsx
+import { render, screen, fireEvent } from '@testing-library/react';
+import { Dialog, DialogTrigger, DialogContent } from '@wyliedog/core';
+
+test('opens dialog on trigger click', () => {
+  render(
+    <Dialog>
+      <DialogTrigger>Open</DialogTrigger>
+      <DialogContent>Dialog content</DialogContent>
+    </Dialog>
+  );
+  
+  fireEvent.click(screen.getByRole('button', { name: /open/i }));
+  expect(screen.getByText('Dialog content')).toBeInTheDocument();
+});
+```
+
+## Advanced Usage
+
+### Custom Components
+
+Extend existing components:
+
+```tsx
+import { Button, ButtonProps } from '@wyliedog/core';
+import { forwardRef } from 'react';
+
+interface LoadingButtonProps extends ButtonProps {
+  loading?: boolean;
+}
+
+const LoadingButton = forwardRef<HTMLButtonElement, LoadingButtonProps>(
+  ({ loading, children, disabled, ...props }, ref) => {
+    return (
+      <Button ref={ref} disabled={disabled || loading} {...props}>
+        {loading && <Spinner className="mr-2" />}
+        {children}
+      </Button>
+    );
+  }
+);
+```
+
+### Compound Components
+
+```tsx
+import { createContext, useContext } from 'react';
+import { Card } from '@wyliedog/core';
+
+const ProductCardContext = createContext();
+
+function ProductCard({ children, product }) {
+  return (
+    <ProductCardContext.Provider value={product}>
+      <Card>{children}</Card>
+    </ProductCardContext.Provider>
+  );
+}
+
+function ProductTitle() {
+  const product = useContext(ProductCardContext);
+  return <h3>{product.title}</h3>;
+}
+
+ProductCard.Title = ProductTitle;
+```
+
+### Headless Components
+
+For complex custom implementations:
+
+```tsx
+import { useDialog } from '@wyliedog/core/hooks';
+
+function CustomDialog() {
+  const { isOpen, open, close, dialogProps, triggerProps } = useDialog();
+  
+  return (
+    <>
+      <button {...triggerProps}>Open Custom Dialog</button>
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/50">
+          <div {...dialogProps} className="custom-dialog">
+            {/* Custom dialog content */}
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+## Migration and Updates
+
+### Version Updates
+
+```bash
+# Check for updates
+pnpm update @wyliedog/core
+
+# Or install specific version
+pnpm add @wyliedog/core@latest
+```
+
+### Breaking Changes
+
+Check the changelog for breaking changes and migration guides. Major version updates may require code changes.
+
+### Codemods
+
+We provide codemods for automated migrations:
+
+```bash
+# Run migration scripts
+npx @wyliedog/codemods v2-to-v3
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Styling not applied:**
+- Ensure CSS is imported correctly
+- Check Tailwind configuration
+- Verify component class names
+
+**TypeScript errors:**
+- Update TypeScript version
+- Check component prop types
+- Ensure correct imports
+
+**Build errors:**
+- Check Vite/webpack configuration
+- Verify peer dependencies
+- Clear node_modules and reinstall
+
+## Getting Help
+
+### Support Channels
+
+- **GitHub Issues:** Bug reports and feature requests
+- **Documentation:** This Storybook for component reference  
+- **Slack:** #design-system-dev for developer discussions
+- **Email:** dev-support@company.com
+
+### Contributing
+
+See our [Contributing Guide](/?path=/docs/resources-contributing-guide) for information on:
+
+- Setting up the development environment
+- Submitting bug reports and feature requests
+- Creating pull requests
+- Code style and testing requirements
+
+---
+
+*Happy coding! The Wylie Dog Design System is here to help you build better user interfaces faster.*

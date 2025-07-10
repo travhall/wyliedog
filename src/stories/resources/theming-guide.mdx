@@ -1,0 +1,585 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Resources/Theming Guide" />
+
+# Theming Guide
+
+The Wylie Dog Design System provides a flexible theming system that allows you to customize the appearance of components while maintaining consistency and accessibility.
+
+## Theme Architecture
+
+Our theming system is built on three layers:
+
+1. **Design Tokens** - The foundational values (colors, spacing, typography)
+2. **Semantic Tokens** - Context-specific mappings (primary, secondary, error)
+3. **Component Themes** - Component-specific styling rules
+
+## Design Tokens
+
+### Color System
+
+Colors are organized into palettes with numeric scales:
+
+```css
+:root {
+  /* Primary palette */
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  /* ... */
+  --color-primary-500: #0ea5e9; /* Main brand color */
+  /* ... */
+  --color-primary-900: #0c4a6e;
+  
+  /* Neutral palette */
+  --color-neutral-50: #f8fafc;
+  /* ... */
+  --color-neutral-500: #64748b;
+  /* ... */
+  --color-neutral-900: #0f172a;
+}
+```
+
+### Typography Tokens
+
+```css
+:root {
+  /* Font families */
+  --font-family-sans: 'Inter', system-ui, sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+  
+  /* Font sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Line heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+}
+```
+
+### Spacing Tokens
+
+```css
+:root {
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;  /* 4px */
+  --spacing-2: 0.5rem;   /* 8px */
+  --spacing-3: 0.75rem;  /* 12px */
+  --spacing-4: 1rem;     /* 16px */
+  --spacing-6: 1.5rem;   /* 24px */
+  --spacing-8: 2rem;     /* 32px */
+  /* ... */
+}
+```
+
+## Theme Provider
+
+### Basic Setup
+
+```tsx
+import { ThemeProvider } from '@wyliedog/core';
+
+function App() {
+  return (
+    <ThemeProvider defaultTheme="light">
+      {/* Your application */}
+    </ThemeProvider>
+  );
+}
+```
+
+### Custom Theme
+
+```tsx
+import { ThemeProvider, createTheme } from '@wyliedog/core';
+
+const customTheme = createTheme({
+  colors: {
+    primary: {
+      50: '#fff7ed',
+      100: '#ffedd5',
+      200: '#fed7aa',
+      300: '#fdba74',
+      400: '#fb923c',
+      500: '#f97316', // Your brand orange
+      600: '#ea580c',
+      700: '#c2410c',
+      800: '#9a3412',
+      900: '#7c2d12',
+    },
+  },
+  typography: {
+    fontFamily: {
+      sans: ['Your Custom Font', 'system-ui', 'sans-serif'],
+    },
+  },
+});
+
+function App() {
+  return (
+    <ThemeProvider theme={customTheme}>
+      {/* Your application */}
+    </ThemeProvider>
+  );
+}
+```
+
+## Dark Mode
+
+### Automatic Dark Mode
+
+```tsx
+function App() {
+  return (
+    <ThemeProvider 
+      defaultTheme="system" // Follows system preference
+      enableSystem
+    >
+      {/* Your application */}
+    </ThemeProvider>
+  );
+}
+```
+
+### Manual Theme Toggle
+
+```tsx
+import { useTheme } from '@wyliedog/core';
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  
+  return (
+    <button 
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+    >
+      Toggle theme
+    </button>
+  );
+}
+```
+
+### Dark Mode Variables
+
+```css
+:root {
+  --background: white;
+  --foreground: black;
+}
+
+[data-theme="dark"] {
+  --background: black;
+  --foreground: white;
+}
+
+/* Or using prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: black;
+    --foreground: white;
+  }
+}
+```
+
+## Customization Methods
+
+### Method 1: CSS Variables Override
+
+The simplest way to customize the theme:
+
+```css
+/* Override specific variables */
+:root {
+  --color-primary-500: #your-brand-color;
+  --font-family-sans: 'Your Font', system-ui, sans-serif;
+  --border-radius-base: 0.5rem;
+}
+```
+
+### Method 2: Theme Object
+
+For TypeScript projects with full IDE support:
+
+```tsx
+const theme = createTheme({
+  colors: {
+    primary: {
+      500: '#your-brand-color',
+    },
+    semantic: {
+      background: 'neutral.50',
+      foreground: 'neutral.900',
+      primary: 'primary.500',
+      secondary: 'neutral.600',
+    },
+  },
+  spacing: {
+    xs: '0.5rem',
+    sm: '1rem',
+    md: '1.5rem',
+    lg: '2rem',
+    xl: '3rem',
+  },
+  borderRadius: {
+    sm: '0.25rem',
+    md: '0.5rem',
+    lg: '1rem',
+  },
+});
+```
+
+### Method 3: Tailwind Integration
+
+For projects using Tailwind CSS:
+
+```js
+// tailwind.config.js
+import { withWylieDog } from '@wyliedog/core/tailwind';
+
+export default withWylieDog({
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          500: '#your-brand-color',
+        },
+      },
+      fontFamily: {
+        sans: ['Your Font', 'system-ui', 'sans-serif'],
+      },
+    },
+  },
+});
+```
+
+## Component-Level Customization
+
+### Using className
+
+```tsx
+<Button className="bg-purple-500 hover:bg-purple-600 text-white">
+  Custom Purple Button
+</Button>
+```
+
+### Using CSS Modules
+
+```css
+/* Button.module.css */
+.customButton {
+  background: var(--color-primary-500);
+  border-radius: var(--border-radius-lg);
+  transition: all var(--transition-duration-normal);
+}
+
+.customButton:hover {
+  background: var(--color-primary-600);
+  transform: translateY(-1px);
+}
+```
+
+```tsx
+import styles from './Button.module.css';
+
+<Button className={styles.customButton}>
+  Styled Button
+</Button>
+```
+
+### Using Styled Components
+
+```tsx
+import styled from 'styled-components';
+import { Button } from '@wyliedog/core';
+
+const StyledButton = styled(Button)`
+  background: ${({ theme }) => theme.colors.primary[500]};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  
+  &:hover {
+    background: ${({ theme }) => theme.colors.primary[600]};
+  }
+`;
+```
+
+## Brand Theme Examples
+
+### Corporate Theme
+
+```tsx
+const corporateTheme = createTheme({
+  colors: {
+    primary: {
+      500: '#1f4e79', // Corporate blue
+    },
+    neutral: {
+      50: '#f8f9fa',
+      900: '#1a1a1a',
+    },
+  },
+  typography: {
+    fontFamily: {
+      sans: ['Source Sans Pro', 'system-ui', 'sans-serif'],
+    },
+  },
+  borderRadius: {
+    base: '0.25rem', // More conservative radius
+  },
+});
+```
+
+### Playful Theme
+
+```tsx
+const playfulTheme = createTheme({
+  colors: {
+    primary: {
+      500: '#ff6b6b', // Bright red
+    },
+    secondary: {
+      500: '#4ecdc4', // Bright teal
+    },
+  },
+  typography: {
+    fontFamily: {
+      sans: ['Nunito', 'system-ui', 'sans-serif'],
+    },
+  },
+  borderRadius: {
+    base: '1rem', // More rounded
+  },
+});
+```
+
+### Minimal Theme
+
+```tsx
+const minimalTheme = createTheme({
+  colors: {
+    primary: {
+      500: '#000000', // Pure black
+    },
+    neutral: {
+      50: '#ffffff',
+      100: '#f5f5f5',
+      900: '#000000',
+    },
+  },
+  typography: {
+    fontFamily: {
+      sans: ['Inter', 'system-ui', 'sans-serif'],
+    },
+  },
+  borderRadius: {
+    base: '0', // No border radius
+  },
+});
+```
+
+## Advanced Theming
+
+### Dynamic Themes
+
+```tsx
+function App() {
+  const [currentTheme, setCurrentTheme] = useState('default');
+  
+  const themes = {
+    default: defaultTheme,
+    corporate: corporateTheme,
+    playful: playfulTheme,
+  };
+  
+  return (
+    <ThemeProvider theme={themes[currentTheme]}>
+      <ThemeSelector 
+        current={currentTheme}
+        onChange={setCurrentTheme}
+        options={Object.keys(themes)}
+      />
+      {/* Your application */}
+    </ThemeProvider>
+  );
+}
+```
+
+### Theme-Aware Components
+
+```tsx
+import { useTheme } from '@wyliedog/core';
+
+function ThemedComponent() {
+  const { resolvedTheme, theme } = useTheme();
+  
+  return (
+    <div 
+      style={{
+        background: theme.colors.primary[500],
+        padding: theme.spacing.md,
+      }}
+    >
+      Current theme: {resolvedTheme}
+    </div>
+  );
+}
+```
+
+### CSS-in-JS Integration
+
+```tsx
+// With emotion
+import { css } from '@emotion/react';
+import { useTheme } from '@wyliedog/core';
+
+function EmotionComponent() {
+  const { theme } = useTheme();
+  
+  return (
+    <div
+      css={css`
+        background: ${theme.colors.primary[500]};
+        padding: ${theme.spacing.md};
+        border-radius: ${theme.borderRadius.md};
+      `}
+    >
+      Styled with Emotion
+    </div>
+  );
+}
+```
+
+## Performance Considerations
+
+### CSS Variable Performance
+
+CSS variables are performant for runtime theme switching:
+
+```css
+/* Good - uses CSS variables */
+.button {
+  background: var(--color-primary-500);
+  transition: background 0.2s;
+}
+
+/* Less performant - requires JS updates */
+.button {
+  background: ${props => props.theme.colors.primary[500]};
+}
+```
+
+### Theme Memoization
+
+```tsx
+const theme = useMemo(() => createTheme({
+  colors: {
+    primary: { 500: userPreferences.brandColor },
+  },
+}), [userPreferences.brandColor]);
+
+return (
+  <ThemeProvider theme={theme}>
+    {/* Your app */}
+  </ThemeProvider>
+);
+```
+
+## Accessibility in Themes
+
+### Color Contrast
+
+Ensure sufficient contrast in custom themes:
+
+```tsx
+const accessibleTheme = createTheme({
+  colors: {
+    primary: {
+      500: '#0066cc', // 4.5:1 contrast with white
+    },
+    text: {
+      primary: '#1a1a1a', // High contrast
+      secondary: '#666666', // 4.5:1 contrast minimum
+    },
+  },
+});
+```
+
+### Motion Preferences
+
+```css
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-duration-fast: 0ms;
+    --transition-duration-normal: 0ms;
+    --transition-duration-slow: 0ms;
+  }
+}
+```
+
+### Focus Indicators
+
+```css
+:root {
+  --focus-ring-width: 2px;
+  --focus-ring-color: var(--color-primary-500);
+  --focus-ring-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  :root {
+    --focus-ring-width: 3px;
+    --focus-ring-color: CanvasText;
+  }
+}
+```
+
+## Testing Themes
+
+### Visual Regression Testing
+
+```tsx
+// Test multiple themes in Storybook
+export default {
+  title: 'Components/Button',
+  component: Button,
+  decorators: [
+    (Story, context) => (
+      <ThemeProvider theme={context.globals.theme}>
+        <Story />
+      </ThemeProvider>
+    ),
+  ],
+};
+```
+
+### Accessibility Testing
+
+```tsx
+// Test color contrast in themes
+import { checkContrast } from '@wyliedog/test-utils';
+
+test('theme maintains color contrast', () => {
+  const theme = createTheme({ /* your theme */ });
+  
+  expect(checkContrast(
+    theme.colors.text.primary,
+    theme.colors.background
+  )).toBeGreaterThan(4.5);
+});
+```
+
+---
+
+*With great theming power comes great responsibility. Always test your themes for accessibility and usability across different user preferences and devices.*

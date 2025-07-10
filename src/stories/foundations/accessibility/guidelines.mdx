@@ -1,0 +1,89 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Foundations/Accessibility/Guidelines" />
+
+# Accessibility Guidelines
+
+## WCAG 2.1 AA Compliance
+
+All components in the Wylie Dog Design System meet or exceed WCAG 2.1 AA standards. This ensures our interfaces are usable by people with diverse abilities and needs.
+
+### Color Contrast
+- **Text Contrast**: Minimum 4.5:1 ratio for normal text, 3:1 for large text
+- **Non-text Contrast**: 3:1 minimum for interactive elements
+- **Color Independence**: Never use color as the only means of conveying information
+
+### Focus Management
+- Visible focus indicators on all interactive elements
+- Logical tab order following visual layout
+- Focus restoration after modal dialogs close
+- Focus trapping in overlay components
+
+## Keyboard Navigation
+
+### Standard Interactions
+- **Tab**: Move forward through interactive elements
+- **Shift + Tab**: Move backward through interactive elements
+- **Enter/Space**: Activate buttons and links
+- **Escape**: Close modals, menus, and overlays
+- **Arrow Keys**: Navigate within menus, tabs, and other grouped controls
+
+### Component-Specific Patterns
+- **Menus**: Arrow keys for navigation, Enter to select
+- **Tabs**: Arrow keys to change tabs, Tab to move to tab panel
+- **Dialogs**: Focus trapped within dialog, Escape to close
+- **Forms**: Tab between controls, Enter to submit
+
+## Screen Reader Support
+
+### ARIA Implementation
+- Proper roles, states, and properties for all components
+- Live regions for dynamic content updates
+- Descriptive labels and instructions
+- Semantic HTML structure
+
+### Announcements
+- State changes communicated to assistive technologies
+- Error messages clearly associated with form controls
+- Dynamic content updates announced appropriately
+- Loading states and progress communicated
+
+## Testing Guidelines
+
+### Automated Testing
+- All components tested with axe-core
+- CI/CD pipeline includes accessibility checks
+- Zero tolerance for automated test failures
+
+### Manual Testing
+- Keyboard-only navigation verification
+- Screen reader testing (NVDA, JAWS, VoiceOver)
+- Color contrast validation
+- Real-world usability assessment
+
+### User Testing
+- Include people with disabilities in testing
+- Test with various assistive technologies
+- Gather feedback on practical usability
+- Address identified barriers promptly
+
+## Implementation Checklist
+
+For each component:
+- [ ] ARIA roles and properties implemented correctly
+- [ ] Keyboard interactions work as expected
+- [ ] Focus management behaves appropriately
+- [ ] Screen reader announcements are clear and helpful
+- [ ] Color contrast meets minimum requirements
+- [ ] No information conveyed by color alone
+- [ ] Responsive design maintains accessibility
+- [ ] Error states provide clear guidance
+
+## Resources
+
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [WAI-ARIA Authoring Practices](https://www.w3.org/WAI/ARIA/apg/)
+- [Inclusive Components](https://inclusive-components.design/)
+- [axe Accessibility Checker](https://www.deque.com/axe/)
+
+*Accessibility is not a feature—it's a fundamental aspect of good design that benefits everyone.*

@@ -3,8 +3,12 @@ import path from "path";
 
 const config: StorybookConfig = {
   stories: [
-    "../src/stories/getting-started/*.mdx",
-    "../src/stories/**/*.stories.tsx"
+    "../src/stories/getting-started/**/*.@(mdx|stories.@(js|jsx|ts|tsx))",
+    "../src/stories/foundations/**/*.@(mdx|stories.@(js|jsx|ts|tsx))",
+    "../src/stories/components/**/*.@(mdx|stories.@(js|jsx|ts|tsx))",
+    "../src/stories/patterns/**/*.@(mdx|stories.@(js|jsx|ts|tsx))",
+    "../src/stories/templates/**/*.@(mdx|stories.@(js|jsx|ts|tsx))",
+    "../src/stories/resources/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"
   ],
 
   addons: [
@@ -12,6 +16,7 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/addon-mdx-gfm",
+    "@storybook/addon-themes",
     "@chromatic-com/storybook"
   ],
 
