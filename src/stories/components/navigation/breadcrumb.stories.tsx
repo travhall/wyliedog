@@ -1,28 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   Breadcrumb,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { ChevronDown, Slash } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/breadcrumb";
 
-const meta: Meta<typeof Breadcrumb> = {
-  title: 'Components/Navigation/Breadcrumb',
+const meta = {
+  title: "Components/Navigation/Breadcrumb",
   component: Breadcrumb,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
-};
+  tags: ["autodocs"],
+} satisfies Meta<typeof Breadcrumb>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -47,7 +41,7 @@ export const Default: Story = {
   ),
 };
 
-export const WithDropdown: Story = {
+export const WithEllipsis: Story = {
   render: () => (
     <Breadcrumb>
       <BreadcrumbList>
@@ -56,49 +50,13 @@ export const WithDropdown: Story = {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1">
-              Components
-              <ChevronDown className="h-4 w-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              <DropdownMenuItem>
-                <BreadcrumbLink href="/docs/components">Documentation</BreadcrumbLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BreadcrumbLink href="/docs/components/installation">Installation</BreadcrumbLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BreadcrumbLink href="/docs/components/typography">Typography</BreadcrumbLink>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <BreadcrumbEllipsis />
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+          <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
         </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
-  ),
-};
-
-export const CustomSeparator: Story = {
-  render: () => (
-    <Breadcrumb>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/">Home</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator>
-          <Slash />
-        </BreadcrumbSeparator>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="/components">Components</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator>
-          <Slash />
-        </BreadcrumbSeparator>
+        <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
         </BreadcrumbItem>
