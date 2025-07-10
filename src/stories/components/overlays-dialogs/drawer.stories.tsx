@@ -36,30 +36,7 @@ export const Default: Story = {
             <DrawerDescription>Set your daily activity goal.</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
-            <div className="flex items-center justify-center space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-              >
-                -
-              </Button>
-              <div className="flex-1 text-center">
-                <div className="text-7xl font-bold tracking-tighter">
-                  350
-                </div>
-                <div className="text-[0.70rem] uppercase text-muted-foreground">
-                  Calories/day
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-              >
-                +
-              </Button>
-            </div>
+            <p>Drawer content goes here</p>
           </div>
           <DrawerFooter>
             <Button>Submit</Button>
