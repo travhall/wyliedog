@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const meta = {
   title: "Components/Feedback & Status/Toast",
@@ -16,20 +16,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => {
-    const { toast } = useToast()
- 
+    const { toast } = useToast();
+    
     return (
       <Button
         variant="outline"
         onClick={() => {
           toast({
-            title: "Scheduled: Catch up ",
+            title: "Scheduled: Catch up",
             description: "Friday, February 10, 2023 at 5:57 PM",
-          })
+          });
         }}
       >
-        Add to calendar
+        Show Toast
       </Button>
-    )
+    );
   },
 };
