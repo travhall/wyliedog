@@ -6,10 +6,9 @@ import {
 } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { CalendarDays } from "lucide-react";
 
 const meta = {
-  title: "Components/Overlays & Dialogs/HoverCard",
+  title: "Components/Overlays & Dialogs/Hover Card",
   component: HoverCard,
   parameters: {
     layout: "centered",
@@ -38,7 +37,6 @@ export const Default: Story = {
               The React Framework – created and maintained by @vercel.
             </p>
             <div className="flex items-center pt-2">
-              <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
               <span className="text-xs text-muted-foreground">
                 Joined December 2021
               </span>
