@@ -1,0 +1,408 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Resources/Component API Reference" />
+
+# Component API Reference
+
+This reference provides detailed information about component APIs, prop interfaces, and common patterns used throughout the Wylie Dog Design System.
+
+## API Conventions
+
+### Prop Naming
+
+We follow consistent naming conventions across all components:
+
+- **variant**: Visual style variations (e.g., `primary`, `secondary`, `outline`)
+- **size**: Size variations (e.g., `sm`, `md`, `lg`)
+- **disabled**: Boolean to disable interaction
+- **className**: Additional CSS classes
+- **children**: Child elements or content
+- **asChild**: Render as a different element (using Radix's asChild pattern)
+
+### TypeScript Interfaces
+
+All components extend appropriate HTML element props:
+
+```tsx
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: 'default' | 'sm' | 'lg' | 'icon';
+  asChild?: boolean;
+}
+```
+
+### Forward Refs
+
+All components use `React.forwardRef` for proper ref handling:
+
+```tsx
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    // Component implementation
+  }
+);
+Button.displayName = "Button";
+```
+
+## Common Patterns
+
+### Compound Components
+
+Many components use the compound component pattern:
+
+```tsx
+// Usage
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    Content here
+  </CardContent>
+  <CardFooter>
+    <Button>Action</Button>
+  </CardFooter>
+</Card>
+
+// Individual component props
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
+// etc.
+```
+
+### Controlled vs Uncontrolled
+
+Components support both controlled and uncontrolled modes:
+
+```tsx
+// Uncontrolled
+<Tabs defaultValue="tab1">
+  <TabsList>
+    <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+  </TabsList>
+</Tabs>
+
+// Controlled
+const [value, setValue] = useState("tab1");
+<Tabs value={value} onValueChange={setValue}>
+  {/* Same content */}
+</Tabs>
+```
+
+### Polymorphic Components
+
+Some components can render as different elements:
+
+```tsx
+// Button as button (default)
+<Button>Click me</Button>
+
+// Button as link
+<Button asChild>
+  <a href="/about">About</a>
+</Button>
+```
+
+## Core Component APIs
+
+### Button
+
+```tsx
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link';
+  size?: 'default' | 'sm' | 'lg' | 'icon';
+  asChild?: boolean;
+}
+```
+
+**Key Features:**
+- Supports all native button attributes
+- Multiple visual variants
+- Size variations
+- Polymorphic rendering with `asChild`
+
+### Input
+
+```tsx
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  // No additional props - extends native input completely
+}
+```
+
+**Key Features:**
+- Extends all native input props
+- Consistent styling across input types
+- Supports all HTML input attributes
+
+### Card
+
+```tsx
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
+interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
+```
+
+**Key Features:**
+- Compound component pattern
+- Semantic HTML structure
+- Flexible content composition
+
+### Dialog
+
+```tsx
+interface DialogProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  defaultOpen?: boolean;
+  children: React.ReactNode;
+}
+
+interface DialogTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+}
+
+interface DialogContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  onEscapeKeyDown?: (event: KeyboardEvent) => void;
+  onPointerDownOutside?: (event: PointerEvent) => void;
+}
+```
+
+**Key Features:**
+- Controlled and uncontrolled modes
+- Compound component structure
+- Accessibility built-in (focus trapping, escape key)
+- Customizable overlay behavior
+
+### Form Components
+
+```tsx
+// Form context and components
+interface FormProps {
+  // Extends react-hook-form's FormProvider
+}
+
+interface FormFieldProps {
+  control: Control;
+  name: string;
+  render: ({ field, fieldState, formState }) => React.ReactNode;
+}
+
+interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface FormLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {}
+interface FormControlProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface FormMessageProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+```
+
+**Key Features:**
+- Integrates with react-hook-form
+- Automatic error handling and validation
+- Accessibility labels and descriptions
+- Consistent form styling
+
+## Accessibility Props
+
+Many components include accessibility-specific props:
+
+### ARIA Props
+
+```tsx
+// Example: Button with ARIA props
+<Button 
+  aria-label="Close dialog"
+  aria-describedby="close-description"
+  aria-expanded={isOpen}
+>
+  ×
+</Button>
+```
+
+### Focus Management
+
+```tsx
+// Components that manage focus
+interface DialogContentProps {
+  onEscapeKeyDown?: (event: KeyboardEvent) => void;
+  onPointerDownOutside?: (event: PointerEvent) => void;
+  onFocusOutside?: (event: FocusEvent) => void;
+}
+```
+
+### Screen Reader Support
+
+```tsx
+// Components with screen reader announcements
+interface ToastProps {
+  title?: string;
+  description?: string;
+  action?: React.ReactNode;
+  // ARIA live region is handled automatically
+}
+```
+
+## Event Handling
+
+### Standard Event Props
+
+All components support standard React event props:
+
+```tsx
+<Button 
+  onClick={handleClick}
+  onFocus={handleFocus}
+  onBlur={handleBlur}
+  onKeyDown={handleKeyDown}
+>
+  Click me
+</Button>
+```
+
+### Custom Event Props
+
+Some components provide additional event handlers:
+
+```tsx
+// Select component
+<Select onValueChange={(value) => console.log(value)}>
+  <SelectTrigger>
+    <SelectValue />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="option1">Option 1</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## Styling and Customization
+
+### className Prop
+
+All components accept a `className` prop for custom styling:
+
+```tsx
+<Button className="w-full bg-green-500 hover:bg-green-600">
+  Custom Button
+</Button>
+```
+
+### CSS Variable Customization
+
+Components use CSS variables that can be overridden:
+
+```css
+.my-custom-button {
+  --button-primary-bg: #custom-color;
+  --button-primary-text: #another-color;
+}
+```
+
+### Style Slots
+
+Some complex components provide style customization slots:
+
+```tsx
+// Example: Table with custom styling
+<Table className="my-table">
+  <TableHeader className="my-header">
+    <TableRow className="my-row">
+      <TableHead className="my-cell">Header</TableHead>
+    </TableRow>
+  </TableHeader>
+</Table>
+```
+
+## Performance Considerations
+
+### Lazy Loading
+
+Large components support lazy loading:
+
+```tsx
+const DataTable = lazy(() => import('@wyliedog/core/data-table'));
+```
+
+### Memoization
+
+Components are optimized with `React.memo` where appropriate:
+
+```tsx
+// Large lists should use memoized items
+const MemoizedListItem = React.memo(ListItem);
+```
+
+### Bundle Size
+
+Tree-shaking is supported for optimal bundle sizes:
+
+```tsx
+// Good - only imports Button
+import { Button } from '@wyliedog/core';
+
+// Avoid - imports everything
+import * as WylieDog from '@wyliedog/core';
+```
+
+## Error Handling
+
+### Error Boundaries
+
+Some components include error boundary support:
+
+```tsx
+<ErrorBoundary fallback={<ErrorFallback />}>
+  <ComplexComponent />
+</ErrorBoundary>
+```
+
+### Validation
+
+Form components integrate with validation libraries:
+
+```tsx
+// With react-hook-form and zod
+const schema = z.object({
+  email: z.string().email(),
+});
+
+const form = useForm({
+  resolver: zodResolver(schema),
+});
+```
+
+## Migration Patterns
+
+### Version Compatibility
+
+When migrating between versions:
+
+```tsx
+// v1.x
+<Button color="primary" size="large">
+  Old API
+</Button>
+
+// v2.x
+<Button variant="primary" size="lg">
+  New API
+</Button>
+```
+
+### Deprecation Warnings
+
+Deprecated props show console warnings in development:
+
+```tsx
+// This will show a deprecation warning
+<Button color="primary"> // 'color' is deprecated, use 'variant'
+  Button
+</Button>
+```
+
+---
+
+*This API reference is automatically generated from component source code and is always up-to-date with the latest version.*
