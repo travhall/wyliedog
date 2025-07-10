@@ -26,16 +26,16 @@ export const Secondary: Story = {
   },
 };
 
-export const Destructive: Story = {
-  args: {
-    variant: "destructive",
-    children: "Destructive",
-  },
-};
-
 export const Outline: Story = {
   args: {
     variant: "outline",
     children: "Outline",
+  },
+};
+
+export const Destructive: Story = {
+  args: {
+    variant: "destructive",
+    children: "Destructive",
   },
 };

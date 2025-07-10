@@ -14,18 +14,18 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    children: (
-      <>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-        <AvatarFallback>CN</AvatarFallback>
-      </>
-    ),
-  },
+  render: () => (
+    <Avatar>
+      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
+  ),
 };
 
 export const Fallback: Story = {
-  args: {
-    children: <AvatarFallback>CN</AvatarFallback>,
-  },
+  render: () => (
+    <Avatar>
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
+  ),
 };
