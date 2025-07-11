@@ -13,11 +13,9 @@ const config: StorybookConfig = {
 
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-mdx-gfm",
     "@storybook/addon-themes",
-    "@chromatic-com/storybook"
+    "@chromatic-com/storybook",
+    "@storybook/addon-docs"
   ],
 
   framework: {
@@ -34,10 +32,6 @@ const config: StorybookConfig = {
         },
       },
     };
-  },
-
-  docs: {
-    autodocs: true
   },
 
   typescript: {
