@@ -1,31 +1,38 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/blocks';
 
 <Meta title="Getting Started/Introduction" />
 
-# 🐕 Wylie Dog Design System
+# UI Component Library
 
-A modern, accessible React component library built with TypeScript, Tailwind CSS, and Radix UI primitives.
+Welcome to our UI component library! This is a collection of reusable components built with:
 
-## Features
-
-- **Accessible by Design**: Built on Radix UI primitives with WCAG 2.1 AA compliance
-- **Type Safe**: Comprehensive TypeScript support with strict typing
-- **Responsive**: Mobile-first design approach
-- **Customizable**: Extensive theming and customization options
-- **Modern Stack**: React 19, TypeScript, Tailwind CSS, Vite
+- React + TypeScript
+- Tailwind CSS
+- Radix UI primitives
+- Lucide React icons
 
 ## Getting Started
 
-1. **Installation**: Add Wylie Dog to your project
-2. **Setup**: Configure your build tools and theme
-3. **First Component**: Import and use your first component
-4. **Customization**: Learn about theming and customization
+```tsx
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 
-## Design Principles
+export default function App() {
+  return (
+    <Card>
+      <Button>Click me</Button>
+    </Card>
+  )
+}
+```
 
-- **Purposeful**: Every design decision serves a clear purpose
-- **Inclusive**: Designed for the full spectrum of human needs
-- **Systematic**: Components form a cohesive system
-- **Flexible**: Adapts to different contexts while maintaining integrity
-- **Efficient**: Minimizes cognitive load and maximizes productivity
-- **Maintainable**: Built for long-term health and sustainability
+## Component Categories
+
+Our components are organized into the following categories:
+
+- **Core** - Basic building blocks (Container, AspectRatio, etc.)
+- **Data Display** - Components for displaying data (Table, Avatar, Badge, etc.)
+- **Feedback** - User feedback components (Toast, Alert, Progress)
+- **Forms** - Form controls and inputs (Input, Button, Select)
+- **Navigation** - Navigation components (Menu, Breadcrumbs, Pagination)
+- **Overlay** - Overlay components (Dialog, Sheet, Tooltip)
