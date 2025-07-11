@@ -1,0 +1,38 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Getting Started/Installation" />
+
+# Installation
+
+Follow these steps to add our components to your project:
+
+## 1. Dependencies
+
+```bash
+npm install @radix-ui/react-* lucide-react tailwindcss-animate class-variance-authority clsx tailwind-merge
+```
+
+## 2. Tailwind CSS Setup
+
+```js
+// tailwind.config.js
+module.exports = {
+  darkMode: ["class"],
+  content: ["./src/**/*.{ts,tsx}"],
+  plugins: [require("tailwindcss-animate")],
+}
+```
+
+## 3. Add Components
+
+Copy the components you need from the `@/components/ui` directory into your project.
+
+## 4. Usage
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+export default function App() {
+  return <Button>Click me</Button>
+}
+```
